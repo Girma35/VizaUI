@@ -51,11 +51,13 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }): Promise<Session> {
       if (session.user) {
-        (session as Session).userId = token.userId as string
-        let subscribed = false
-        if (token.userId) subscribed = await isSubscribed(token.userId as string)
-        (session as Session).isSubscribed = subscribed
-        (session as Session).subscriptionStatus = subscribed ? 'active' : 'free'
+        const extended = session as Session
+        extended.userId = token.userId as string
+        const isSubscribedUser: boolean = token.userId
+          ? await isSubscribed(token.userId as string)
+          : false
+        extended.isSubscribed = isSubscribedUser
+        extended.subscriptionStatus = isSubscribedUser ? 'active' : 'free'
       }
       return session
     },

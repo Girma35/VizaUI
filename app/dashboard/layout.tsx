@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Sidebar from '@/components/layout/Sidebar'
 import { Menu } from 'lucide-react'
+import { SessionProvider } from '@/components/providers/SessionProvider'
 
 export default function DashboardLayout({
   children,
@@ -12,6 +13,7 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
+    <SessionProvider>
     <div className="flex h-screen bg-slate-950 overflow-hidden">
       {/* Desktop Sidebar */}
       <div className="hidden lg:flex lg:flex-shrink-0">
@@ -50,5 +52,6 @@ export default function DashboardLayout({
         </main>
       </div>
     </div>
+    </SessionProvider>
   )
 }

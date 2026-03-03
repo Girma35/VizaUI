@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
@@ -10,13 +10,12 @@ import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
 import { REFERRAL_COOKIE, REFERRAL_COOKIE_MAX_AGE, getReferralFromSearchParams } from '@/lib/referral'
 
-export default function RegisterPage() {
+function RegisterForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
   const searchParams = useSearchParams()
 
-  // Persist referral code from URL (?ref=...) into cookie so API can attribute signup
   useEffect(() => {
     const ref = getReferralFromSearchParams(searchParams)
     if (ref) {
@@ -149,5 +148,17 @@ export default function RegisterPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <p className="text-slate-400">Loading…</p>
+      </div>
+    }>
+      <RegisterForm />
+    </Suspense>
   )
 }
