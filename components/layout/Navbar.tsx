@@ -32,7 +32,6 @@ export default function Navbar() {
 
           <div className="hidden md:flex items-center gap-8">
             <Link href="/tools" className="text-slate-400 hover:text-white text-sm transition-colors">Tools</Link>
-            <Link href="/api-tool" className="text-slate-400 hover:text-white text-sm transition-colors">API Tester</Link>
             <Link href="#features" className="text-slate-400 hover:text-white text-sm transition-colors">Features</Link>
             <Link href="#pricing" className="text-slate-400 hover:text-white text-sm transition-colors">Pricing</Link>
           </div>
@@ -52,7 +51,6 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="md:hidden bg-slate-900 border-t border-slate-800 px-4 py-4 space-y-3">
           <Link href="/tools" className="block text-slate-300 hover:text-white py-2">Tools</Link>
-          <Link href="/api-tool" className="block text-slate-300 hover:text-white py-2">API Tester</Link>
           <Link href="#features" className="block text-slate-300 hover:text-white py-2">Features</Link>
           <Link href="#pricing" className="block text-slate-300 hover:text-white py-2">Pricing</Link>
           <Link href="/tools" className="block pt-2">

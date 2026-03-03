@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
 import { getToolBySlug, toolCategories } from '@/lib/data'
+import { siteUrl, siteName } from '@/lib/site'
 import { Download, ArrowLeft, Zap } from 'lucide-react'
 
 interface Props {
@@ -12,11 +13,45 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const tool = getToolBySlug(slug)
-  if (!tool) return { title: 'Tool not found | VizaLabs' }
+  if (!tool) return { title: 'Tool not found' }
+  const title = `${tool.name} | ${siteName} Tools`
+  const url = `${siteUrl}/tools/${slug}`
   return {
-    title: `${tool.name} | VizaLabs Tools`,
+    title,
     description: tool.description,
+    openGraph: {
+      title,
+      description: tool.description,
+      url,
+      type: 'website',
+    },
+    alternates: { canonical: url },
   }
+}
+
+function ToolJsonLd({
+  tool,
+  slug,
+}: {
+  tool: { name: string; description: string; version: string; category: string }
+  slug: string
+}) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: tool.name,
+    description: tool.description,
+    applicationCategory: tool.category,
+    softwareVersion: tool.version,
+    url: `${siteUrl}/tools/${slug}`,
+    publisher: { '@type': 'Organization', name: siteName },
+  }
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  )
 }
 
 export default async function ToolPage({ params }: Props) {
@@ -28,6 +63,15 @@ export default async function ToolPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-slate-950">
+      <ToolJsonLd
+        tool={{
+          name: tool.name,
+          description: tool.description,
+          version: tool.version,
+          category: categoryLabel,
+        }}
+        slug={slug}
+      />
       <Navbar />
       <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">

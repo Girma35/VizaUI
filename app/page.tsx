@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/layout/Navbar'
 import Hero from '@/components/landing/Hero'
 import Features from '@/components/landing/Features'
@@ -5,6 +6,18 @@ import Pricing from '@/components/landing/Pricing'
 import CTA from '@/components/landing/CTA'
 import { Zap } from 'lucide-react'
 import Link from 'next/link'
+import { siteUrl, siteName, siteDescription } from '@/lib/site'
+
+export const metadata: Metadata = {
+  title: `${siteName} - Free Software Tools Store`,
+  description: siteDescription,
+  openGraph: {
+    url: siteUrl,
+    title: `${siteName} - Free Software Tools Store`,
+    description: siteDescription,
+  },
+  alternates: { canonical: siteUrl },
+}
 
 export default function Home() {
   return (

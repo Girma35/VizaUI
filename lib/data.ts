@@ -127,18 +127,18 @@ export const chatMessages = [
 
 export const pricingPlans = [
   {
-    name: 'All tools',
-    price: 'Free',
-    description: 'Every tool on VizaLabs is free to download',
+    name: 'Pro',
+    price: '$5',
+    period: '/month',
+    description: 'No ads, exclusive tools, and the perfect toolkit. One simple plan.',
     features: [
-      'Unlimited downloads',
-      'No account required',
-      'No payment or subscription',
-      'Browse by category',
-      'Search and filter',
-      'Always available',
+      'No ads — clean experience',
+      'Exclusive tools — members only',
+      'Perfect toolkit — everything you need',
+      'All updates included',
+      'Cancel anytime',
     ],
-    cta: 'Browse Tools',
+    cta: 'Subscribe — $5/month',
     highlighted: true,
   },
 ]

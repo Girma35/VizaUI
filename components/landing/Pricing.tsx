@@ -17,13 +17,13 @@ export default function Pricing() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl font-bold text-white mb-4"
         >
-          All tools{' '}
+          Simple{' '}
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            free
+            pricing
           </span>
         </motion.h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
-          Download any software tool without sign-up or payment.
+          $5/month — no ads, exclusive tools, and the perfect toolkit.
         </p>
       </div>
 
@@ -46,7 +46,7 @@ export default function Pricing() {
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="px-4 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-xs font-semibold text-white">
-                    Most Popular
+                    No ads · Exclusive tools
                   </span>
                 </div>
               )}
@@ -68,15 +68,15 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <Link href="/tools">
-              <Button
-                variant={plan.highlighted ? 'primary' : 'secondary'}
-                size="md"
-                className="w-full"
-              >
-                {plan.cta}
-              </Button>
-            </Link>
+              <Link href="/register" className="block w-full">
+                <Button
+                  variant={plan.highlighted ? 'primary' : 'secondary'}
+                  size="md"
+                  className="w-full"
+                >
+                  {plan.cta}
+                </Button>
+              </Link>
             </div>
           </motion.div>
         ))}
