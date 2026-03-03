@@ -1,48 +1,48 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageSquare, BarChart3, Users, Shield, Cpu, Zap } from 'lucide-react'
+import { Download, FolderOpen, LockOpen, Search, LayoutGrid, Zap } from 'lucide-react'
 import Card from '@/components/ui/Card'
 
 const iconMap: Record<string, React.ReactNode> = {
-  MessageSquare: <MessageSquare className="h-6 w-6" />,
-  BarChart3: <BarChart3 className="h-6 w-6" />,
-  Users: <Users className="h-6 w-6" />,
-  Shield: <Shield className="h-6 w-6" />,
-  Cpu: <Cpu className="h-6 w-6" />,
+  Download: <Download className="h-6 w-6" />,
+  FolderOpen: <FolderOpen className="h-6 w-6" />,
+  LockOpen: <LockOpen className="h-6 w-6" />,
+  Search: <Search className="h-6 w-6" />,
+  LayoutGrid: <LayoutGrid className="h-6 w-6" />,
   Zap: <Zap className="h-6 w-6" />,
 }
 
 const features = [
   {
-    icon: 'MessageSquare',
-    title: 'AI Chat',
-    description: 'Integrate powerful conversational AI into your applications with our easy-to-use chat API.',
+    icon: 'FolderOpen',
+    title: 'Browse tools',
+    description: 'Explore productivity, development, design, and utility tools in one place.',
   },
   {
-    icon: 'BarChart3',
-    title: 'Analytics',
-    description: 'Get deep insights into your AI usage with real-time dashboards and detailed reports.',
+    icon: 'Download',
+    title: 'One-click download',
+    description: 'Download any tool instantly. No account or payment required.',
   },
   {
-    icon: 'Users',
-    title: 'Team Collaboration',
-    description: 'Work together seamlessly with role-based access control and shared workspaces.',
+    icon: 'LockOpen',
+    title: 'Free for everyone',
+    description: 'All tools are free to access and download. No sign-up needed.',
   },
   {
-    icon: 'Shield',
-    title: 'Secure API',
-    description: 'Enterprise-grade security with end-to-end encryption and compliance certifications.',
+    icon: 'Search',
+    title: 'Search & filter',
+    description: 'Find what you need quickly with search and category filters.',
   },
   {
-    icon: 'Cpu',
-    title: 'Custom Models',
-    description: 'Fine-tune and deploy your own AI models tailored to your specific use case.',
+    icon: 'LayoutGrid',
+    title: 'Organized by category',
+    description: 'Tools are grouped by type so you can discover similar software easily.',
   },
   {
     icon: 'Zap',
-    title: 'Fast Integration',
-    description: 'Get up and running in minutes with our comprehensive SDKs and documentation.',
+    title: 'Always available',
+    description: 'Store and share your favorite software tools. Anyone can access anytime.',
   },
 ]
 
@@ -56,13 +56,13 @@ export default function Features() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl font-bold text-white mb-4"
         >
-          Everything you need to build{' '}
+          Why use our{' '}
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            AI apps
+            tools store
           </span>
         </motion.h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
-          A complete toolkit for building, deploying, and scaling AI-powered applications.
+          A simple place to discover and download software tools. No barriers, no sign-up.
         </p>
       </div>
 

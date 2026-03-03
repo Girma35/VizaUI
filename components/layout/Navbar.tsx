@@ -31,17 +31,15 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-8">
+            <Link href="/tools" className="text-slate-400 hover:text-white text-sm transition-colors">Tools</Link>
+            <Link href="/api-tool" className="text-slate-400 hover:text-white text-sm transition-colors">API Tester</Link>
             <Link href="#features" className="text-slate-400 hover:text-white text-sm transition-colors">Features</Link>
             <Link href="#pricing" className="text-slate-400 hover:text-white text-sm transition-colors">Pricing</Link>
-            <Link href="#" className="text-slate-400 hover:text-white text-sm transition-colors">Docs</Link>
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/login">
-              <Button variant="ghost" size="sm">Sign in</Button>
-            </Link>
-            <Link href="/register">
-              <Button variant="primary" size="sm">Get Started</Button>
+            <Link href="/tools">
+              <Button variant="primary" size="sm">Browse Tools</Button>
             </Link>
           </div>
 
@@ -53,17 +51,13 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="md:hidden bg-slate-900 border-t border-slate-800 px-4 py-4 space-y-3">
+          <Link href="/tools" className="block text-slate-300 hover:text-white py-2">Tools</Link>
+          <Link href="/api-tool" className="block text-slate-300 hover:text-white py-2">API Tester</Link>
           <Link href="#features" className="block text-slate-300 hover:text-white py-2">Features</Link>
           <Link href="#pricing" className="block text-slate-300 hover:text-white py-2">Pricing</Link>
-          <Link href="#" className="block text-slate-300 hover:text-white py-2">Docs</Link>
-          <div className="flex gap-3 pt-2">
-            <Link href="/login" className="flex-1">
-              <Button variant="secondary" size="sm" className="w-full">Sign in</Button>
-            </Link>
-            <Link href="/register" className="flex-1">
-              <Button variant="primary" size="sm" className="w-full">Get Started</Button>
-            </Link>
-          </div>
+          <Link href="/tools" className="block pt-2">
+            <Button variant="primary" size="sm" className="w-full">Browse Tools</Button>
+          </Link>
         </div>
       )}
     </nav>

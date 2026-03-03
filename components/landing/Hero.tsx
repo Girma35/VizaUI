@@ -21,7 +21,7 @@ export default function Hero() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-6">
             <span className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" />
-            Now in public beta
+            Free software tools for everyone
           </span>
         </motion.div>
 
@@ -31,10 +31,11 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6"
         >
-          Build smarter with{' '}
+          Your free
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            AI
+            {' '}software tools
           </span>
+          {' '}store
         </motion.h1>
 
         <motion.p
@@ -43,7 +44,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto mb-10"
         >
-          VizaLabs is the complete AI platform for building, deploying, and scaling intelligent applications. Start free, scale infinitely.
+          Browse and download productivity, development, and utility tools. No sign-up required — anyone can access and download.
         </motion.p>
 
         <motion.div
@@ -52,14 +53,16 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link href="/register">
+          <Link href="/tools">
             <Button variant="primary" size="lg" className="gap-2">
-              Get Started Free <ArrowRight className="h-5 w-5" />
+              Browse & Download Tools <ArrowRight className="h-5 w-5" />
             </Button>
           </Link>
-          <Button variant="ghost" size="lg" className="gap-2 text-slate-300">
-            <Play className="h-5 w-5" /> View Demo
-          </Button>
+          <Link href="/tools">
+            <Button variant="ghost" size="lg" className="gap-2 text-slate-300">
+              <Play className="h-5 w-5" /> View all tools
+            </Button>
+          </Link>
         </motion.div>
 
         <motion.div

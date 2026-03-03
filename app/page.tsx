@@ -24,7 +24,7 @@ export default function Home() {
             </div>
             <span className="font-bold text-white">VizaLabs</span>
           </div>
-          <p className="text-slate-400 text-sm">© 2024 VizaLabs. All rights reserved.</p>
+          <p className="text-slate-400 text-sm">© 2025 VizaLabs. All tools free to download.</p>
           <div className="flex gap-6">
             <Link href="#" className="text-slate-400 hover:text-white text-sm transition-colors">Privacy</Link>
             <Link href="#" className="text-slate-400 hover:text-white text-sm transition-colors">Terms</Link>

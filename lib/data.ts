@@ -1,3 +1,117 @@
+// Software tools store – anyone can browse and download
+export type ToolCategory = 'productivity' | 'development' | 'design' | 'utilities' | 'other'
+
+export interface Tool {
+  id: string
+  slug: string
+  name: string
+  description: string
+  category: ToolCategory
+  version: string
+  downloadUrl: string
+  fileSize?: string
+  icon?: string
+  featured?: boolean
+  /** If true, downloadUrl opens the web tool instead of a file download */
+  isWebTool?: boolean
+}
+
+export const toolCategories: { value: ToolCategory; label: string }[] = [
+  { value: 'productivity', label: 'Productivity' },
+  { value: 'development', label: 'Development' },
+  { value: 'design', label: 'Design' },
+  { value: 'utilities', label: 'Utilities' },
+  { value: 'other', label: 'Other' },
+]
+
+export const tools: Tool[] = [
+  {
+    id: '1',
+    slug: 'file-sync-pro',
+    name: 'File Sync Pro',
+    description: 'Keep folders in sync across devices. Lightweight, fast, and works offline.',
+    category: 'productivity',
+    version: '2.1.0',
+    downloadUrl: '/downloads/file-sync-pro.zip',
+    fileSize: '12 MB',
+    featured: true,
+  },
+  {
+    id: '2',
+    slug: 'code-formatter',
+    name: 'Code Formatter',
+    description: 'Format and lint code in 50+ languages. CLI and editor plugins included.',
+    category: 'development',
+    version: '1.4.2',
+    downloadUrl: '/downloads/code-formatter.zip',
+    fileSize: '8 MB',
+    featured: true,
+  },
+  {
+    id: '3',
+    slug: 'color-palette-gen',
+    name: 'Color Palette Gen',
+    description: 'Generate accessible color palettes from a single base color. Export to CSS/SCSS.',
+    category: 'design',
+    version: '1.0.0',
+    downloadUrl: '/downloads/color-palette-gen.zip',
+    fileSize: '3 MB',
+    featured: false,
+  },
+  {
+    id: '4',
+    slug: 'batch-renamer',
+    name: 'Batch Renamer',
+    description: 'Rename hundreds of files with patterns, regex, and preview before applying.',
+    category: 'utilities',
+    version: '3.0.1',
+    downloadUrl: '/downloads/batch-renamer.zip',
+    fileSize: '5 MB',
+    featured: true,
+  },
+  {
+    id: '5',
+    slug: 'json-viewer',
+    name: 'JSON Viewer',
+    description: 'Pretty-print, validate, and search JSON. Drag-and-drop or paste support.',
+    category: 'development',
+    version: '2.2.0',
+    downloadUrl: '/downloads/json-viewer.zip',
+    fileSize: '4 MB',
+    featured: false,
+  },
+  {
+    id: '6',
+    slug: 'screenshot-tool',
+    name: 'Screenshot Tool',
+    description: 'Capture region, window, or full screen. Annotate and share in one click.',
+    category: 'utilities',
+    version: '1.5.0',
+    downloadUrl: '/downloads/screenshot-tool.zip',
+    fileSize: '6 MB',
+    featured: false,
+  },
+  {
+    id: '7',
+    slug: 'api-tester',
+    name: 'API Tester',
+    description: 'Test API endpoints in the browser. Send GET/POST/PUT/DELETE, set headers and body, view formatted JSON response.',
+    category: 'development',
+    version: '1.0.0',
+    downloadUrl: '/api-tool',
+    featured: true,
+    isWebTool: true,
+  },
+]
+
+export function getToolBySlug(slug: string): Tool | undefined {
+  return tools.find((t) => t.slug === slug)
+}
+
+export function getToolsByCategory(category: ToolCategory): Tool[] {
+  return tools.filter((t) => t.category === category)
+}
+
 export const stats = [
   { label: 'Total Users', value: '12,847', change: '+12%', trend: 'up' },
   { label: 'Active Chats', value: '3,291', change: '+8%', trend: 'up' },
@@ -13,51 +127,19 @@ export const chatMessages = [
 
 export const pricingPlans = [
   {
-    name: 'Starter',
+    name: 'All tools',
     price: 'Free',
-    description: 'Perfect for individuals and small projects',
+    description: 'Every tool on VizaLabs is free to download',
     features: [
-      '1,000 API calls/month',
-      '1 AI model',
-      'Basic analytics',
-      'Community support',
-      '1 team member',
+      'Unlimited downloads',
+      'No account required',
+      'No payment or subscription',
+      'Browse by category',
+      'Search and filter',
+      'Always available',
     ],
-    cta: 'Get Started Free',
-    highlighted: false,
-  },
-  {
-    name: 'Pro',
-    price: '$29',
-    period: '/mo',
-    description: 'For growing teams and businesses',
-    features: [
-      '100,000 API calls/month',
-      '10 AI models',
-      'Advanced analytics',
-      'Priority support',
-      '10 team members',
-      'Custom integrations',
-    ],
-    cta: 'Start Pro Trial',
+    cta: 'Browse Tools',
     highlighted: true,
-  },
-  {
-    name: 'Enterprise',
-    price: '$99',
-    period: '/mo',
-    description: 'For large organizations',
-    features: [
-      'Unlimited API calls',
-      'Unlimited AI models',
-      'Enterprise analytics',
-      'Dedicated support',
-      'Unlimited team members',
-      'Custom integrations',
-      'SLA guarantee',
-    ],
-    cta: 'Contact Sales',
-    highlighted: false,
   },
 ]
 

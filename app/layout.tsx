@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'VizaLabs - AI SaaS Platform',
-  description: 'Build smarter AI applications with VizaLabs. The complete platform for AI-powered SaaS.',
-  keywords: ['AI', 'SaaS', 'machine learning', 'API', 'VizaLabs'],
+  title: 'VizaLabs - Free Software Tools Store',
+  description: 'Browse and download software tools. Productivity, development, design & utilities. Free for everyone, no sign-up required.',
+  keywords: ['software tools', 'free download', 'productivity', 'development', 'utilities', 'VizaLabs'],
   openGraph: {
-    title: 'VizaLabs - AI SaaS Platform',
-    description: 'Build smarter AI applications with VizaLabs.',
+    title: 'VizaLabs - Free Software Tools Store',
+    description: 'Browse and download software tools. Free for everyone.',
     type: 'website',
   },
 }

@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import { pricingPlans } from '@/lib/data'
@@ -16,18 +17,17 @@ export default function Pricing() {
           viewport={{ once: true }}
           className="text-3xl sm:text-4xl font-bold text-white mb-4"
         >
-          Simple,{' '}
+          All tools{' '}
           <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            transparent
-          </span>{' '}
-          pricing
+            free
+          </span>
         </motion.h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
-          Choose the plan that fits your needs. Upgrade or downgrade at any time.
+          Download any software tool without sign-up or payment.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8 items-stretch">
+      <div className="grid md:grid-cols-1 max-w-md mx-auto gap-8 items-stretch">
         {pricingPlans.map((plan, i) => (
           <motion.div
             key={plan.name}
@@ -68,6 +68,7 @@ export default function Pricing() {
                 ))}
               </ul>
 
+              <Link href="/tools">
               <Button
                 variant={plan.highlighted ? 'primary' : 'secondary'}
                 size="md"
@@ -75,6 +76,7 @@ export default function Pricing() {
               >
                 {plan.cta}
               </Button>
+            </Link>
             </div>
           </motion.div>
         ))}
