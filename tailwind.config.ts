@@ -10,6 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Home page palette (ColorHunt: FFF2C6, FFF8DE, AAC4F5, 8CA9FF)
+        cream: { light: '#FFF8DE', DEFAULT: '#FFF2C6' },
+        palette: { blue: '#AAC4F5', accent: '#8CA9FF' },
+        btn: '#F6CE71',
         primary: { DEFAULT: '#7c3aed', foreground: '#ffffff' },
         'primary-foreground': '#ffffff',
         destructive: '#ef4444',

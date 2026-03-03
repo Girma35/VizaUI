@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
       <main>
         <Hero />
@@ -29,18 +29,18 @@ export default function Home() {
         <Pricing />
         <CTA />
       </main>
-      <footer className="border-t border-slate-800 py-12 px-4">
+      <footer className="border-t border-slate-200 py-12 px-4 bg-white">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800">
               <Zap className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-white">VizaLabs</span>
+            <span className="font-bold text-black">VizaLabs</span>
           </div>
-          <p className="text-slate-400 text-sm">© 2025 VizaLabs. All tools free to download.</p>
+          <p className="text-black text-sm">© 2025 VizaLabs.</p>
           <div className="flex gap-6">
-            <Link href="#" className="text-slate-400 hover:text-white text-sm transition-colors">Privacy</Link>
-            <Link href="#" className="text-slate-400 hover:text-white text-sm transition-colors">Terms</Link>
+            <Link href="/privacy" className="text-black hover:underline text-sm transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-black hover:underline text-sm transition-colors">Terms of Service</Link>
           </div>
         </div>
       </footer>

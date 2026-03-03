@@ -1,0 +1,70 @@
+// Prisma schema for user accounts, subscriptions, and referral tracking.
+// Run: npx prisma generate && npx prisma db push (or migrate)
+// Use SQLite for dev; switch to PostgreSQL by changing provider and url.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// NextAuth.js required models (use with Prisma adapter or match this shape for custom auth)
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String?
+  passwordHash  String?   // for credentials provider; null if OAuth-only
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Referral: which campaign or link brought this user (e.g. ?ref=welcome2025)
+  referralCode  String?
+  // Subscription status: denormalized for fast access; keep in sync via webhooks
+  subscriptionStatus String  @default("free") // "free" | "active" | "cancelled" | "past_due"
+  subscriptionId    String? // Stripe subscription ID or similar
+  subscriptionEndsAt DateTime? // when access ends (for cancelled)
+
+  accounts Account[]
+  sessions Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Optional: track referral link visits (for analytics)
+model ReferralVisit {
+  id           String   @id @default(cuid())
+  referralCode String
+  visitedAt    DateTime @default(now())
+  userId       String?  // set when they register
+}

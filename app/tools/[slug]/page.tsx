@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Button from '@/components/ui/Button'
+import { ShareToolPopup } from '@/components/ui/ShareToolPopup'
 import { getToolBySlug, toolCategories } from '@/lib/data'
 import { siteUrl, siteName } from '@/lib/site'
 import { Download, ArrowLeft, Zap } from 'lucide-react'
@@ -112,6 +113,10 @@ export default async function ToolPage({ params }: Props) {
                   </Button>
                 </a>
               )}
+              <ShareToolPopup
+                toolName={tool.name}
+                shareUrl={`${siteUrl}/tools/${slug}`}
+              />
               {tool.fileSize && (
                 <span className="text-slate-500 text-sm">Size: {tool.fileSize}</span>
               )}
@@ -124,14 +129,18 @@ export default async function ToolPage({ params }: Props) {
         </div>
       </main>
       <footer className="border-t border-slate-800 py-8 px-4 mt-16">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
               <Zap className="h-5 w-5 text-white" />
             </div>
             <span className="font-bold text-white">VizaLabs</span>
           </div>
-          <p className="text-slate-400 text-sm">© 2025 VizaLabs. All tools free to download.</p>
+          <p className="text-slate-400 text-sm">© 2025 VizaLabs.</p>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="text-slate-400 hover:text-white text-sm">Privacy</Link>
+            <Link href="/terms" className="text-slate-400 hover:text-white text-sm">Terms</Link>
+          </div>
         </div>
       </footer>
     </div>

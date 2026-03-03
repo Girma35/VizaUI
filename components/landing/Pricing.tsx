@@ -15,14 +15,11 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-bold text-white mb-4"
+          className="text-3xl sm:text-4xl font-bold text-black mb-4"
         >
-          Simple{' '}
-          <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            pricing
-          </span>
+          Simple <span className="text-black">pricing</span>
         </motion.h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">
+        <p className="text-black max-w-2xl mx-auto">
           $5/month — no ads, exclusive tools, and the perfect toolkit.
         </p>
       </div>
@@ -40,42 +37,40 @@ export default function Pricing() {
             <div className={clsx(
               'flex flex-col w-full rounded-2xl p-8',
               plan.highlighted
-                ? 'bg-gradient-to-b from-purple-900/40 to-blue-900/40 border-2 border-purple-500/50 shadow-xl shadow-purple-500/10 relative'
-                : 'bg-slate-800/50 border border-slate-700'
+                ? 'bg-cream border-2 border-palette-accent/60 shadow-xl shadow-palette-blue/20 relative'
+                : 'bg-cream border border-palette-blue/40'
             )}>
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="px-4 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-xs font-semibold text-white">
+                  <span className="px-4 py-1 bg-palette-accent rounded-full text-xs font-semibold text-white">
                     No ads · Exclusive tools
                   </span>
                 </div>
               )}
               <div className="mb-8">
-                <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                <h3 className="text-xl font-bold text-black mb-2">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-3">
-                  <span className="text-4xl font-extrabold text-white">{plan.price}</span>
-                  {plan.period && <span className="text-slate-400">{plan.period}</span>}
+                  <span className="text-4xl font-extrabold text-black">{plan.price}</span>
+                  {plan.period && <span className="text-black">{plan.period}</span>}
                 </div>
-                <p className="text-sm text-slate-400">{plan.description}</p>
+                <p className="text-sm text-black">{plan.description}</p>
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2.5 text-sm text-slate-300">
-                    <Check className="h-4 w-4 text-purple-400 flex-shrink-0" />
+                  <li key={feature} className="flex items-center gap-2.5 text-sm text-black">
+                    <Check className="h-4 w-4 text-palette-accent flex-shrink-0" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
-              <Link href="/register" className="block w-full">
-                <Button
-                  variant={plan.highlighted ? 'primary' : 'secondary'}
-                  size="md"
-                  className="w-full"
-                >
-                  {plan.cta}
-                </Button>
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center w-full font-medium rounded-lg px-4 py-2 text-sm transition-opacity hover:opacity-90 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-600"
+                style={{ backgroundColor: '#F6CE71', color: 'black' }}
+              >
+                {plan.cta}
               </Link>
             </div>
           </motion.div>

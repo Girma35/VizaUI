@@ -6,7 +6,10 @@ import Link from "next/link"
 import { LiquidCard, CardContent, CardHeader } from "@/components/ui/liquid-glass-card"
 import { Badge } from "@/components/ui/badge"
 import { LiquidButton } from "@/components/ui/liquid-glass-button"
+import { ShareToolPopup } from "@/components/ui/ShareToolPopup"
 import { tools, toolCategories, type Tool, type ToolCategory } from "@/lib/data"
+import { siteUrl } from "@/lib/site"
+import { Share2 } from "lucide-react"
 
 // Utils
 function circumference(r: number): number {
@@ -71,7 +74,7 @@ function ToolScoreHalfCircle({ value, max = 100, id }: { value: number; max?: nu
         </linearGradient>
       </defs>
       <g fill="none" strokeWidth="10" transform="translate(50, 50.5)">
-        <circle className="stroke-slate-700/50" r={radius} />
+        <circle className="stroke-slate-200" r={radius} />
         <circle
           ref={strokeRef}
           stroke={`url(#${gradId})`}
@@ -87,8 +90,8 @@ function ToolScoreHalfCircle({ value, max = 100, id }: { value: number; max?: nu
 function ToolScoreDisplay({ version }: { version: string }) {
   return (
     <div className="absolute bottom-0 w-full text-center">
-      <div className="text-2xl font-medium h-10 text-white">v{version}</div>
-      <div className="text-xs text-slate-400 uppercase tracking-wide">Version</div>
+      <div className="text-2xl font-medium h-10 text-black">v{version}</div>
+      <div className="text-xs text-slate-500 uppercase tracking-wide">Version</div>
     </div>
   )
 }
@@ -99,14 +102,14 @@ function ToolScoreHeader({ tool }: { tool: Tool }) {
 
   return (
     <CardHeader className="flex flex-row items-center justify-between gap-4 pb-6 px-0">
-      <h2 className="text-xl font-medium truncate text-white">{tool.name}</h2>
+      <h2 className="text-xl font-medium truncate text-black">{tool.name}</h2>
       <div className="flex items-center gap-2 shrink-0">
         {tool.featured && (
-          <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 text-xs">
+          <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-xs">
             Featured
           </Badge>
         )}
-        <Badge variant="secondary" className="text-xs border-slate-600 text-slate-300">
+        <Badge variant="secondary" className="text-xs border-slate-200 text-slate-600 bg-slate-50">
           {categoryLabel}
         </Badge>
       </div>
@@ -128,23 +131,41 @@ function ToolScoreCard({ tool, index }: { tool: Tool; index: number }) {
   if (!appearing) return null
 
   return (
-    <LiquidCard className="w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-800 fill-mode-both">
+    <LiquidCard className="w-full max-w-md animate-in fade-in slide-in-from-bottom-8 duration-800 fill-mode-both !bg-white border border-slate-200 shadow-md hover:border-slate-300 hover:shadow-lg transition-all duration-200">
       <CardContent className="p-9">
         <ToolScoreHeader tool={tool} />
         <div className="relative mb-8 animate-in fade-in slide-in-from-bottom-12 duration-800 delay-100">
           <ToolScoreHalfCircle value={score} id={tool.id} />
           <ToolScoreDisplay version={tool.version} />
         </div>
-        <p className="text-slate-400 text-center mb-9 min-h-[4.5rem] text-sm leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-800 delay-200">
+        <p className="text-slate-600 text-center mb-9 min-h-[4.5rem] text-sm leading-relaxed animate-in fade-in slide-in-from-bottom-12 duration-800 delay-200">
           {tool.description}
         </p>
-        <div className="flex flex-col sm:flex-row gap-3">
-          <LiquidButton variant="default" size="lg" className="w-full sm:flex-1 h-12 bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" asChild>
-            <a href={tool.downloadUrl} download>Download</a>
-          </LiquidButton>
-          <LiquidButton variant="secondary" size="lg" className="w-full sm:flex-1 h-12" asChild>
-            <Link href={`/tools/${tool.slug}`}>View details</Link>
-          </LiquidButton>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
+            {tool.isWebTool ? (
+              <LiquidButton variant="default" size="lg" className="w-full sm:flex-1 h-12 border-0" style={{ backgroundColor: '#F6CE71', color: 'black' }} asChild>
+                <Link href={tool.downloadUrl}>Use tool</Link>
+              </LiquidButton>
+            ) : (
+              <LiquidButton variant="default" size="lg" className="w-full sm:flex-1 h-12 border-0" style={{ backgroundColor: '#F6CE71', color: 'black' }} asChild>
+                <a href={tool.downloadUrl} download>Download</a>
+              </LiquidButton>
+            )}
+            <LiquidButton variant="secondary" size="lg" className="w-full sm:flex-1 h-12 border border-slate-300 text-black hover:bg-slate-50" asChild>
+              <Link href={`/tools/${tool.slug}`}>View details</Link>
+            </LiquidButton>
+          </div>
+          <ShareToolPopup
+            toolName={tool.name}
+            shareUrl={`${siteUrl}/tools/${tool.slug}`}
+            trigger={
+              <span className="inline-flex items-center justify-center gap-2 w-full sm:w-auto py-2.5 px-4 rounded-lg border border-slate-300 text-slate-600 hover:text-black hover:bg-slate-50 hover:border-slate-400 text-sm font-medium transition-colors">
+                <Share2 className="h-4 w-4" /> Share with community
+              </span>
+            }
+            className="w-full sm:w-auto"
+          />
         </div>
       </CardContent>
     </LiquidCard>

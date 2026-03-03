@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 import { Zap, Github, Mail, Lock } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -11,11 +12,28 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
     setLoading(true)
-    setTimeout(() => setLoading(false), 1500)
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+      if (result?.error) {
+        setError('Invalid email or password')
+        return
+      }
+      if (result?.ok) {
+        window.location.href = result.url ?? '/dashboard'
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -59,6 +77,8 @@ export default function LoginPage() {
                 Forgot password?
               </Link>
             </div>
+
+            {error && <p className="text-sm text-red-400">{error}</p>}
 
             <Button type="submit" variant="primary" size="lg" className="w-full" loading={loading}>
               Sign in

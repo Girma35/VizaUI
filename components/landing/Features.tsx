@@ -1,52 +1,14 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Download, FolderOpen, LockOpen, Search, LayoutGrid, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { Zap, TrendingUp } from 'lucide-react'
 import Card from '@/components/ui/Card'
-
-const iconMap: Record<string, React.ReactNode> = {
-  Download: <Download className="h-6 w-6" />,
-  FolderOpen: <FolderOpen className="h-6 w-6" />,
-  LockOpen: <LockOpen className="h-6 w-6" />,
-  Search: <Search className="h-6 w-6" />,
-  LayoutGrid: <LayoutGrid className="h-6 w-6" />,
-  Zap: <Zap className="h-6 w-6" />,
-}
-
-const features = [
-  {
-    icon: 'FolderOpen',
-    title: 'Browse tools',
-    description: 'Explore productivity, development, design, and utility tools in one place.',
-  },
-  {
-    icon: 'Download',
-    title: 'One-click download',
-    description: 'Download any tool instantly. No account or payment required.',
-  },
-  {
-    icon: 'LockOpen',
-    title: 'Free for everyone',
-    description: 'All tools are free to access and download. No sign-up needed.',
-  },
-  {
-    icon: 'Search',
-    title: 'Search & filter',
-    description: 'Find what you need quickly with search and category filters.',
-  },
-  {
-    icon: 'LayoutGrid',
-    title: 'Organized by category',
-    description: 'Tools are grouped by type so you can discover similar software easily.',
-  },
-  {
-    icon: 'Zap',
-    title: 'Always available',
-    description: 'Store and share your favorite software tools. Anyone can access anytime.',
-  },
-]
+import { getToolsActiveThisWeek, toolCategories } from '@/lib/data'
 
 export default function Features() {
+  const activeTools = getToolsActiveThisWeek()
+
   return (
     <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center mb-16">
@@ -54,36 +16,45 @@ export default function Features() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl sm:text-4xl font-bold text-white mb-4"
+          className="text-3xl sm:text-4xl font-bold text-black mb-4"
         >
-          Why use our{' '}
-          <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            tools store
-          </span>
+          Tools actively used this week
         </motion.h2>
-        <p className="text-slate-400 max-w-2xl mx-auto">
-          A simple place to discover and download software tools. No barriers, no sign-up.
+        <p className="text-black max-w-2xl mx-auto">
+          Most popular tools right now. Updated daily.
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {features.map((feature, i) => (
-          <motion.div
-            key={feature.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-          >
-            <Card hover className="p-6 h-full">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-600/20 to-blue-600/20 rounded-xl flex items-center justify-center text-purple-400 mb-4 border border-purple-500/20">
-                {iconMap[feature.icon]}
-              </div>
-              <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
-            </Card>
-          </motion.div>
-        ))}
+        {activeTools.map((tool, i) => {
+          const categoryLabel = toolCategories.find((c) => c.value === tool.category)?.label ?? tool.category
+          return (
+            <motion.div
+              key={tool.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+            >
+              <Link href={`/tools/${tool.slug}`}>
+                <Card hover className="p-6 h-full !bg-white border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all duration-200 cursor-pointer">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center border border-slate-200 bg-slate-50 text-slate-700 shrink-0">
+                      <Zap className="h-6 w-6" />
+                    </div>
+                    <span className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+                      <TrendingUp className="h-3.5 w-3.5" />
+                      {tool.usedThisWeek?.toLocaleString()} this week
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-black mb-1">{tool.name}</h3>
+                  <p className="text-slate-600 text-xs mb-2">{categoryLabel}</p>
+                  <p className="text-black text-sm leading-relaxed line-clamp-2">{tool.description}</p>
+                </Card>
+              </Link>
+            </motion.div>
+          )
+        })}
       </div>
     </section>
   )

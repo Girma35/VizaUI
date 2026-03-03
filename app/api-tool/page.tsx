@@ -250,11 +250,14 @@ export default function ApiToolPage() {
         </p>
       </main>
       <footer className="border-t border-slate-800 py-6 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 flex-wrap">
           <Link href="/tools" className="flex items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors">
             <Zap className="h-4 w-4" /> Back to Tools
           </Link>
-          <span className="text-slate-500 text-sm">VizaLabs API Tester</span>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="text-slate-500 hover:text-white text-sm">Privacy</Link>
+            <Link href="/terms" className="text-slate-500 hover:text-white text-sm">Terms</Link>
+          </div>
         </div>
       </footer>
     </div>

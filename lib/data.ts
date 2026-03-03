@@ -14,6 +14,13 @@ export interface Tool {
   featured?: boolean
   /** If true, downloadUrl opens the web tool instead of a file download */
   isWebTool?: boolean
+  /** Mock: times used this week (for "actively used" section) */
+  usedThisWeek?: number
+  /**
+   * If true, only paying (subscribed) users can use this tool; free users see paywall/ads.
+   * Omit or false = tool is free for everyone (e.g. API Tester, Time Zone Converter).
+   */
+  proOnly?: boolean
 }
 
 export const toolCategories: { value: ToolCategory; label: string }[] = [
@@ -35,6 +42,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/file-sync-pro.zip',
     fileSize: '12 MB',
     featured: true,
+    usedThisWeek: 342,
   },
   {
     id: '2',
@@ -46,6 +54,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/code-formatter.zip',
     fileSize: '8 MB',
     featured: true,
+    usedThisWeek: 518,
   },
   {
     id: '3',
@@ -57,6 +66,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/color-palette-gen.zip',
     fileSize: '3 MB',
     featured: false,
+    usedThisWeek: 89,
   },
   {
     id: '4',
@@ -68,6 +78,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/batch-renamer.zip',
     fileSize: '5 MB',
     featured: true,
+    usedThisWeek: 201,
   },
   {
     id: '5',
@@ -79,6 +90,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/json-viewer.zip',
     fileSize: '4 MB',
     featured: false,
+    usedThisWeek: 276,
   },
   {
     id: '6',
@@ -90,6 +102,7 @@ export const tools: Tool[] = [
     downloadUrl: '/downloads/screenshot-tool.zip',
     fileSize: '6 MB',
     featured: false,
+    usedThisWeek: 445,
   },
   {
     id: '7',
@@ -101,6 +114,19 @@ export const tools: Tool[] = [
     downloadUrl: '/api-tool',
     featured: true,
     isWebTool: true,
+    usedThisWeek: 612,
+  },
+  {
+    id: '8',
+    slug: 'time-zone-converter',
+    name: 'Time zone converter',
+    description: 'Set a date & time, add time zones from a list, and see the time in each zone plus how many hours and minutes left (or ago) in real time.',
+    category: 'utilities',
+    version: '1.0.0',
+    downloadUrl: '/time-zone-tool',
+    featured: true,
+    isWebTool: true,
+    usedThisWeek: 189,
   },
 ]
 
@@ -110,6 +136,14 @@ export function getToolBySlug(slug: string): Tool | undefined {
 
 export function getToolsByCategory(category: ToolCategory): Tool[] {
   return tools.filter((t) => t.category === category)
+}
+
+/** Tools sorted by usedThisWeek (active this week), for the home page section */
+export function getToolsActiveThisWeek(): Tool[] {
+  return [...tools]
+    .filter((t) => t.usedThisWeek != null && t.usedThisWeek > 0)
+    .sort((a, b) => (b.usedThisWeek ?? 0) - (a.usedThisWeek ?? 0))
+    .slice(0, 6)
 }
 
 export const stats = [

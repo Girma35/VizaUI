@@ -1,20 +1,56 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { signIn } from 'next-auth/react'
 import { Zap, Github, Mail, Lock, User } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
+import { REFERRAL_COOKIE, REFERRAL_COOKIE_MAX_AGE, getReferralFromSearchParams } from '@/lib/referral'
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
+  const searchParams = useSearchParams()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Persist referral code from URL (?ref=...) into cookie so API can attribute signup
+  useEffect(() => {
+    const ref = getReferralFromSearchParams(searchParams)
+    if (ref) {
+      document.cookie = `${REFERRAL_COOKIE}=${encodeURIComponent(ref)}; path=/; max-age=${REFERRAL_COOKIE_MAX_AGE}; SameSite=Lax`
+    }
+  }, [searchParams])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError(null)
+    if (form.password !== form.confirm) return
     setLoading(true)
-    setTimeout(() => setLoading(false), 1500)
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: form.email, password: form.password, name: form.name }),
+        credentials: 'include',
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(data.error || 'Registration failed')
+        return
+      }
+      const result = await signIn('credentials', {
+        email: form.email,
+        password: form.password,
+        redirect: true,
+        callbackUrl: '/dashboard',
+      })
+      if (result?.error) setError('Sign-in failed after registration')
+    } finally {
+      setLoading(false)
+    }
   }
 
   const update = (key: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -72,6 +108,8 @@ export default function RegisterPage() {
               icon={<Lock className="h-4 w-4" />}
               error={form.confirm && form.password !== form.confirm ? 'Passwords do not match' : undefined}
             />
+
+            {error && <p className="text-sm text-red-400">{error}</p>}
 
             <Button type="submit" variant="primary" size="lg" className="w-full mt-2" loading={loading}>
               Create account

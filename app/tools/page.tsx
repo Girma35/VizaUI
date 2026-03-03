@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import { tools, toolCategories, type ToolCategory } from '@/lib/data'
 import { ToolScoreCardsWithProvider } from '@/components/ui/tool-score-cards'
@@ -11,27 +12,28 @@ export default function ToolsPage() {
   const [category, setCategory] = useState<ToolCategory | 'all'>('all')
 
   const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
     return tools.filter((tool) => {
       const matchSearch =
-        search === '' ||
-        tool.name.toLowerCase().includes(search.toLowerCase()) ||
-        tool.description.toLowerCase().includes(search.toLowerCase())
+        q === '' ||
+        tool.name.toLowerCase().includes(q) ||
+        tool.description.toLowerCase().includes(q)
       const matchCategory = category === 'all' || tool.category === category
       return matchSearch && matchCategory
     })
   }, [search, category])
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-50">
       <Navbar />
       <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-              Software <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Tools</span>
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 text-black">
+              All <span className="text-black">Tools</span>
             </h1>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Browse and download tools. Free to use, no sign-up required.
+            <p className="text-black/80 text-lg max-w-2xl mx-auto">
+              Browse all tools — use web tools in the browser or download. Free, no sign-up required.
             </p>
           </div>
 
@@ -43,13 +45,13 @@ export default function ToolsPage() {
                 placeholder="Search tools..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white border border-slate-200 text-black placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-slate-300"
               />
             </div>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as ToolCategory | 'all')}
-              className="px-4 py-3 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 min-w-[180px]"
+              className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-black focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-slate-300 min-w-[180px]"
             >
               <option value="all">All categories</option>
               {toolCategories.map((c) => (
@@ -61,24 +63,28 @@ export default function ToolsPage() {
           </div>
 
           {filtered.length === 0 ? (
-            <div className="text-center py-16 text-slate-400">
-              <Wrench className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <div className="text-center py-16 text-slate-600">
+              <Wrench className="h-12 w-12 mx-auto mb-4 opacity-50 text-slate-400" />
               <p>No tools match your filters. Try a different search or category.</p>
             </div>
           ) : (
-            <ToolScoreCardsWithProvider toolsList={filtered} />
+            <ToolScoreCardsWithProvider key={`${search}-${category}`} toolsList={filtered} />
           )}
         </div>
       </main>
-      <footer className="border-t border-slate-800 py-8 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <footer className="border-t border-slate-200 py-12 px-4 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800">
               <Zap className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-white">VizaLabs</span>
+            <span className="font-bold text-black">VizaLabs</span>
           </div>
-          <p className="text-slate-400 text-sm">© 2025 VizaLabs. All tools free to download.</p>
+          <p className="text-black text-sm">© 2025 VizaLabs.</p>
+          <div className="flex gap-6">
+            <Link href="/privacy" className="text-black hover:underline text-sm transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-black hover:underline text-sm transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </footer>
     </div>
